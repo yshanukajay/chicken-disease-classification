@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.getcwd())
+
 from src.chicken_disease.config.configuration import ConfigurationManager
 from src.chicken_disease.components.prepare_callbacks import PrepareCallBack
 from src.chicken_disease.components.training import Training

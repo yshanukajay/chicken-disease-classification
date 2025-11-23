@@ -1,9 +1,12 @@
+import sys, os
+sys.path.append(os.getcwd())
+
 import os
 import urllib.request as request
 import zipfile 
-from chicken_disease import logger
-from chicken_disease.utils.common import get_size
-from chicken_disease.entity.config_entity import DataIngestionConfig
+from src.chicken_disease import logger
+from src.chicken_disease.utils.common import get_size
+from src.chicken_disease.entity.config_entity import DataIngestionConfig
 from pathlib import Path
 
 class DataIngestion:

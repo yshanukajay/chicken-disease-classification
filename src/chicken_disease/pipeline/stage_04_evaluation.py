@@ -3,30 +3,31 @@ import os
 sys.path.append(os.getcwd())
 
 from src.chicken_disease.config.configuration import ConfigurationManager
-from src.chicken_disease.components.data_ingestion import DataIngestion
+from src.chicken_disease.components.evaluation import Evaluation
 from src.chicken_disease import logger
 
 
-STAGE_NAME = "Data Ingestion Stage"
+STAGE_NAME = "Evaluation Stage"
 
-class DataIngestionTrainingPipeline:
+class EvaluationPipeline:
     def __init__(self):
         pass
-
+    
     def main(self):
         config = ConfigurationManager()
-        data_ingestion_config = config.get_data_ingestion_config()
-        data_ingestion = DataIngestion(config = data_ingestion_config)
-        data_ingestion.download_file()
-        data_ingestion.extract_zip_file()
+        val_config = config.get_validation_config()
+        evaluation = Evaluation(val_config)
+        evaluation.evaluation()
+        evaluation.save_score()
 
 if __name__ == "__main__":
     try:
+        logger.info(f"******************************")
         logger.info(f">>>>>> Stage {STAGE_NAME} started <<<<<<")
-        obj = DataIngestionTrainingPipeline()
-        obj.main()
+        evaluation_pipeline = EvaluationPipeline()
+        evaluation_pipeline.main()
         logger.info(f">>>>>> Stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+   
     except Exception as e:
         logger.exception(e)
         raise e
-

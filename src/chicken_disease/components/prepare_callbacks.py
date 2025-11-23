@@ -1,9 +1,12 @@
+import sys
 import os
+sys.path.append(os.getcwd())
+
 import urllib.request as request
 import zipfile as zipfile
 import tensorflow as tf
 import time
-from chicken_disease.entity.config_entity import PrepareCallbacksConfig
+from src.chicken_disease.entity.config_entity import PrepareCallbacksConfig
 
 class PrepareCallBack:
     def __init__(self, config: "PrepareCallbacksConfig"):

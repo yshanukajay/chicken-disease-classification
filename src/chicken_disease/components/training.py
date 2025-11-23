@@ -1,7 +1,10 @@
-from pathlib import Path
+import sys
 import os
+sys.path.append(os.getcwd())
+
+from pathlib import Path
 import tensorflow as tf
-from chicken_disease.entity.config_entity import TrainingConfig
+from src.chicken_disease.entity.config_entity import TrainingConfig
 
 
 class Training:

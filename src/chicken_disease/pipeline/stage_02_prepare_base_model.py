@@ -1,6 +1,10 @@
-from chicken_disease.config.configuration import ConfigurationManager
-from chicken_disease.components.prepare_base_model import PrepareBaseModel
-from chicken_disease import logger
+import sys
+import os
+sys.path.append(os.getcwd())
+
+from src.chicken_disease.config.configuration import ConfigurationManager
+from src.chicken_disease.components.prepare_base_model import PrepareBaseModel
+from src.chicken_disease import logger
 STAGE_NAME = "Prepare base model"
 
 class PrepareBaseModelTrainingPipeline:

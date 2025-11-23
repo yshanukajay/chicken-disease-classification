@@ -1,9 +1,12 @@
+import sys
 import os
+sys.path.append(os.getcwd())
+
 import urllib.request as request
 from zipfile import ZipFile
 import tensorflow as tf
 from pathlib import Path
-from chicken_disease.entity.config_entity import PrepareBaseModelConfig
+from src.chicken_disease.entity.config_entity import PrepareBaseModelConfig
 
 class PrepareBaseModel:
     def __init__(self, config: PrepareBaseModelConfig):
