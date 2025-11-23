@@ -32,3 +32,7 @@ class PrepareCallBack:
             self._create_tb_callback,
             self._create_ckpt_callback
         ]
+
+    def get_tb_ckpt_callbacks(self):
+        """Alias method to match pipeline naming."""
+        return self.get_callbacks()
