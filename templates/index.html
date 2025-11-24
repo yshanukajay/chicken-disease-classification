@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chicken Disease Classifier</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f7f7f7;
+            padding: 20px;
+        }
+
+        #preview {
+            margin-top: 20px;
+            max-width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+
+        #loading {
+            display: none;
+            font-weight: bold;
+            color: #ff6600;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            width: 400px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <h1>🐔 Chicken Disease Classification</h1>
+
+    <div class="container">
+
+        <input type="file" id="imageInput" accept="image/*">
+        <br>
+
+        <img id="preview" src="#" alt="Preview" style="display: none;">
+        <br>
+
+        <button id="predictBtn">Predict</button>
+
+        <p id="loading">⏳ Processing... Please wait</p>
+
+        <div class="result" id="resultText"></div>
+
+    </div>
+
+
+    <script>
+        let base64Image = "";
+
+        // Show preview and convert to Base64
+        document.getElementById("imageInput").addEventListener("change", function () {
+            const file = this.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                base64Image = e.target.result.split(",")[1];
+                $("#preview").attr("src", e.target.result).show();
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // Predict button
+        $("#predictBtn").click(function () {
+
+            if (base64Image === "") {
+                alert("Please upload an image first!");
+                return;
+            }
+
+            $("#loading").show();
+            $("#resultText").text("");
+
+            $.ajax({
+                url: "/predict",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ image: base64Image }),
+
+                success: function (res) {
+                    console.log("Response:", res);
+
+                    $("#loading").hide();
+
+                    if (res.prediction !== undefined) {
+                        $("#resultText").text("Prediction: " + res.prediction);
+                    } else {
+                        $("#resultText").text("Prediction not received!");
+                    }
+                },
+
+                
+
+                
+
+                error: function (err) {
+                    console.error(err);
+                    $("#loading").hide();
+                    $("#resultText").text("Error occurred during prediction!");
+                }
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
